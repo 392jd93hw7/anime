@@ -1,30 +1,36 @@
-# Anime Streaming Starter
+# Kairo — Anime discovery and streaming UI
 
-A responsive anime discovery and watch-site starter built with plain HTML, CSS, and JavaScript. Designed for deployment to Vercel as a static site.
+Responsive anime discovery/watch frontend using HTML, CSS, and JavaScript, deployable as a static Vercel site.
 
 ## Features
-- Responsive dark UI with featured anime and discovery shelves
-- Search and genre filtering
-- Anime detail modal
-- Watch page with server selector and subtitle/dub toggle
-- Local watchlist stored in the browser
-- Uses a configurable metadata API adapter; demo catalog works without credentials
+- Featured anime, trending shelf, search, genre filters, sorting, and responsive poster grid.
+- Anime detail view and a localStorage watchlist.
+- Sub/dub selector, episode list, API-driven server lookup, and iframe/video playback when the configured API returns an authorized URL.
+- Demo catalog fallback while API routes are being configured.
 
 ## Run locally
-Open `index.html` in a browser, or run a static server:
-
 ```bash
 npx serve .
 ```
 
-## Configure
-Edit `js/config.js` to point `METADATA_API_BASE` at an API you control and are authorized to use. The default mode uses a small demo catalog. The player page only embeds URLs explicitly supplied by your configured API; it does not scrape third-party sites.
+## Configure the AniVault API
+Edit `js/config.js`. The starter points to `https://anivault-scraper-khaki.vercel.app`. Its endpoint paths are **placeholders to verify**, not guaranteed routes. Check the API documentation dashboard and update `ROUTES` to its exact endpoint paths and query parameters.
 
-## Deploy to Vercel
-Import this repository in Vercel and use the following settings:
-- Framework Preset: Other
-- Build Command: leave empty
+The adapter expects JSON and normalizes common response shapes:
+- Catalog/search: array or `results`, `data`, `anime`, `items`, `list`, `trending`, `popular`.
+- Anime records: ID/title, poster/image, synopsis, score, year, type, genres and episode count.
+- Episode and server responses: arrays; adapt `js/api.js` if the actual contract differs.
+- Stream responses: `url`, `embedUrl`, `embed_url`, `iframe`, `file`, or `sources[0].url`.
+
+Never put private tokens in browser code. Use a server-side proxy and environment variables for secrets.
+
+## Vercel
+- Framework Preset: **Other**
+- Build Command: empty
 - Output Directory: `.`
+- Install Command: empty
 
-## Important
-Use only video sources you own, have licensed, or are otherwise authorized to embed. Never put private API keys in browser-side JavaScript.
+This is a static site. No build step is required.
+
+## Playback and rights
+Playback depends on the actual API response, provider embed permissions, CORS, browser codecs, and source format. This interface does not scrape sites or bypass DRM. Use only streams you own, license, or are authorized to embed. HLS (`.m3u8`) support may require hls.js and a compatible source.
