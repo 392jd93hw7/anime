@@ -27,7 +27,7 @@ function toggleList(id) {
   const anime = findAnime(id); if (!anime) { toast("Anime details are not available yet."); return; }
   const exists = state.list.some(item => String(item.id) === String(id));
   state.list = exists ? state.list.filter(item => String(item.id) !== String(id)) : [...state.list, anime];
-  saveStore("kairo-list", state.list); updateCounters(); renderHomeCards(); toast(exists ? "Removed from your watchlist" : "Added to your watchlist");
+  saveStore("kairo-list", state.list); updateCounters(); renderHomeCards(); if (state.route === "watchlist") renderRoute("watchlist"); toast(exists ? "Removed from your watchlist" : "Added to your watchlist");
   if ($("#detail-dialog").open) showDetails(id);
 }
 function renderHomeCards() {
