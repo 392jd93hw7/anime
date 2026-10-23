@@ -1,15 +1,17 @@
-/* Public configuration only; never put private keys in browser JavaScript. */
+/* Public configuration only; never put private API keys in browser JavaScript. */
 window.KAIRO_CONFIG = {
   API_BASE: "https://anivault-scraper-khaki.vercel.app",
+  API_SOURCE: "animeheaven",
   ROUTES: {
     health: "/api/health",
-    search: "/api/anime/search",
-    popular: "/api/anime/popular",
-    trending: "/api/anime/trending",
-    info: "/api/anime/info",
-    episodes: "/api/anime/episodes",
-    servers: "/api/anime/servers",
-    stream: "/api/anime/stream"
+    search: "/api/search",
+    info: "/api/info",
+    episodes: "/api/episodes",
+    servers: "/api/servers",
+    watch: "/api/watch",
+    season: "/api/anilist/season",
+    anime: "/api/anime",
+    malSearch: "/api/mal/search"
   },
   DEMO_FALLBACK: true
 };
