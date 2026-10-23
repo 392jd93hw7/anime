@@ -82,13 +82,12 @@ export const api = {
     return [];
   },
   async details(id) {
-    const numeric = Number(id);
     if (CONFIG.metadataApiBase) {
       try { return normalize(await request(join(CONFIG.metadataApiBase, "/anime/" + encodeURIComponent(id)))); }
       catch { /* fall through to search */ }
     }
     const list = await this.list({ perPage: 50 });
-    return list.find(x => x.id === String(id)) || list.find(x => Number(x.id) === numeric) || null;
+    return list.find(x => String(x.id) === String(id)) || null;
   },
   async search(query) {
     const q = query.trim();
